@@ -11,16 +11,20 @@ export default function Waitlist() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[url('/bg-2.png')] bg-black text-white p-6">
+    <div className="min-h-screen flex items-center justify-center bg-[url('/bg-2.png')] bg-black text-white px-4 sm:px-6 py-6">
       <div className="max-w-lg w-full text-center space-y-6">
         {/* Thumbs Up Image */}
         <div className="flex justify-center">
-          <img src="/thumbs-up.png" alt="Thumbs Up" className="w-20 h-20 rotate-12" />
+          <img src="/thumbs-up.png" alt="Thumbs Up" className="w-16 sm:w-20 h-16 sm:h-20 rotate-12" />
         </div>
 
         {/* Title & Description */}
-        <h1 className="text-2xl font-bold">Hold tight, You're on the waitlist !</h1>
-        <p className="text-gray-400 text-sm">You will receive an invite with a username and password soon</p>
+        <h1 className="text-xl sm:text-2xl font-bold">
+          Hold tight, You're on the waitlist!
+        </h1>
+        <p className="text-gray-400 text-sm sm:text-base">
+          You will receive an invite with a username and password soon.
+        </p>
 
         {/* Progress Bar Section */}
         <div className="space-y-2">
@@ -34,44 +38,68 @@ export default function Waitlist() {
         </div>
 
         {/* Stats Section */}
-        <div className="flex justify-around text-lg">
+        <div className="flex justify-around text-sm sm:text-lg">
           <div>
             <p className="font-semibold">330</p>
-            <p className="text-gray-400 text-xs">Points earned</p>
+            <p className="text-gray-400 text-xs sm:text-sm">Points earned</p>
           </div>
           <div>
             <p className="font-semibold">2</p>
-            <p className="text-gray-400 text-xs">Referrals</p>
+            <p className="text-gray-400 text-xs sm:text-sm">Referrals</p>
           </div>
         </div>
 
         {/* Referral Section */}
-        <div className="flex items-center border border-gray-400/20 p-1 rounded-full bg-gray-900/50 space-x-3">
-  {/* Earn More Points */}
-  <p className="text-white text-sm px-4 py-2 rounded-full bg-gradient-to-r from-purple-600/15 to-indigo-700/30 border border-gray-400/20">
-    Earn more points
-  </p>
-  
-  {/* Points per invite */}
-  <p className="text-sm px-4 border-r border-gray-500/30 text-gray-300 ">+30 per invite</p>
+        <div className="flex flex-col sm:flex-row items-center border border-gray-400/20 p-2 rounded-full bg-gray-900/50 space-y-3 sm:space-y-0 sm:space-x-3">
+          {/* Earn More Points */}
+          <p className="text-white text-sm px-4 py-2 rounded-full bg-gradient-to-r from-purple-600/15 to-indigo-700/30 border border-gray-400/20">
+            Earn more points
+          </p>
 
-  {/* Referral Link */}
-  <div className="flex items-center bg-gray-800 px-3 py-2 rounded-full text-sm flex-1 overflow-hidden">
-    <span className="truncate">{referralLink}</span>
-    <button onClick={handleCopy} className="ml-2 text-gray-300 hover:text-white">
-      <img src="/copy.png" alt="Copy" className="w-8 h-5" />
-    </button>
-  </div>
-</div>
-{copied && <p className="text-green-400 text-sm mt-2 text-center">Copied!</p>}
+          {/* Points per invite */}
+          <p className="text-sm px-4 border-r border-gray-500/30 text-gray-300 sm:border-none sm:pr-0">
+            +30 per invite
+          </p>
 
+          {/* Referral Link */}
+          <div className="flex items-center bg-gray-800 px-3 py-2 rounded-full text-sm flex-1 overflow-hidden">
+            <span className="truncate">{referralLink}</span>
+            <button
+              onClick={handleCopy}
+              className="ml-2 text-gray-300 hover:text-white"
+            >
+              <img src="/copy.png" alt="Copy" className="w-6 sm:w-8 h-5" />
+            </button>
+          </div>
+        </div>
+        {copied && (
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-green-400 text-white px-6 py-2 rounded-full shadow-lg opacity-90">
+            <p className="text-sm">Copied!</p>
+          </div>
+        )}
 
         {/* Social Media Icons */}
-        <div className="flex justify-center space-x-4">
-          <img src="/facebook.png" alt="Facebook" className="w-6 h-6 cursor-pointer hover:opacity-80" />
-          <img src="/instagram.png" alt="Instagram" className="w-6 h-6 cursor-pointer hover:opacity-80" />
-          <img src="/linkedin.png" alt="LinkedIn" className="w-6 h-6 cursor-pointer hover:opacity-80" />
-          <img src="/x.png" alt="Twitter (X)" className="w-6 h-6 cursor-pointer hover:opacity-80" />
+        <div className="flex justify-center space-x-4 mt-4">
+          <img
+            src="/facebook.png"
+            alt="Facebook"
+            className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+          />
+          <img
+            src="/instagram.png"
+            alt="Instagram"
+            className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+          />
+          <img
+            src="/linkedin.png"
+            alt="LinkedIn"
+            className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+          />
+          <img
+            src="/x.png"
+            alt="Twitter (X)"
+            className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+          />
         </div>
       </div>
     </div>

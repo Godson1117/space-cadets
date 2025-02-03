@@ -1,58 +1,99 @@
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
+import BackdropLoader from "./BackdropLoader";
+import { Link } from "react-router";
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (data) => {
-    console.log(data)
-  }
+  const onSubmit = async (data) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);// Show loader
+    // try {
+    //   const response = await axios.post('http://localhost:4000/login', data);
+    //   console.log(response);
+    // } catch (error) {
+    //   console.error("Login failed:", error);
+    // } finally {
+    //   setLoading(false); // Hide loader after API response
+    // }
+  };
 
   return (
-    <>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[url('/download.png')] bg-center bg-cover 
-      ">
-        <div className="max-w-xl w-full bg-white/10 p-8 rounded-3xl shadow-lg backdrop-blur-2xl">
-          <h1 className="text-center text-md font-medium mb-6 text-white">
-            Join us today — sign into the account with your email !</h1>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-400">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="mt-1 focus:outline-none border-b-2 focus:border-green-600 w-full px-3 py-2 text-gray-300"
-                placeholder="username@domain"
-                {...register("email", { required: true })}
-              />
-              {errors.email && <span className="text-red-500">This field is required</span>}
-            </div>
-            <div className="mb-6">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-400">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                className="mt-1 block w-full px-3 py-2 focus:outline-none border-b-2 focus:border-green-600 text-gray-300"
-                placeholder="********"
-                {...register("password", { required: true })}
-              />
-            </div>
-            <div className="text-center">
-              <button
-                type="submit"
-                className="w-32 bg-green-500 text-white py-2 px-4 rounded-full transition-all ease-in-out hover:w-40 duration-300 hover:bg-green-600"
-              >
-                Get Started
-              </button>
-            </div>
-          </form>
-        </div>
-        <p className="mt-6 text-center text-sm text-gray-200">– it's quick and easy !</p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[url('/bg.png')] bg-center bg-cover px-4 sm:px-6 lg:px-8 relative">
+      {loading && <BackdropLoader />} {/* Loader here */}
+
+      <div className="max-w-md w-full bg-white/5 p-6 sm:p-8 lg:p-10 rounded-3xl shadow-lg backdrop-blur-xl">
+        <h1 className="text-center text-lg sm:text-xl font-medium mb-6 text-white">
+          Join us today — sign into your account with your email!
+        </h1>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4 relative">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-400"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              className={`mt-1 w-full px-3 py-2 text-gray-300 bg-transparent border-b-2 border-gray-400 focus:outline-none hover:border-green-500 transition-all ${errors.username ? 'border-red-500' : ''}`}
+              placeholder="username"
+              {...register("username", { required: true })}
+            />
+          </div>
+
+          <div className="mb-6 relative">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-400"
+            >
+              Password
+            </label>
+            <img
+              src="/eye.png"
+              alt="Eye Icon"
+              className="absolute right-3 top-10 w-6 h-5 cursor-pointer"
+              onClick={() => {
+                const passwordInput = document.getElementById('password');
+                passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+              }}
+            />
+            <input
+              type="password"
+              id="password"
+              className={`mt-1 w-full px-3 py-2 text-gray-300 bg-transparent border-b-2 border-gray-400 focus:outline-none hover:border-green-500 transition-all ${errors.password ? 'border-red-500' : ''}`}
+              placeholder="********"
+              {...register("password", { required: true })}
+            />
+          </div>
+
+          <div className="flex justify-center">
+            <Link to="/password-reset" className="text-center text-gray-400 underline text-xs hover:scale-105 hover:text-green-400 duration-300">Reset your password here</Link>
+          </div>
+
+          <div className="text-center">
+            <button
+              type="submit"
+              className="mt-5 w-32 py-2 px-4 font-medium rounded-xl text-black bg-gradient-to-r from-cyan-200 to-cyan-600 transition-all ease-in-out duration-300 hover:scale-105"
+              disabled={loading} // Disable button when loading
+            >
+              Get Started
+            </button>
+          </div>
+        </form>
       </div>
-    </>
+
+      <p className="mt-6 text-center text-sm text-gray-200">
+        – it's quick and easy!
+      </p>
+    </div>
   );
 };
 
