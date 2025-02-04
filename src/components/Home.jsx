@@ -17,7 +17,7 @@ const Home = () => {
         <p className="mt-4 text-lg md:text-xl text-gray-300">
           Explore the cosmos, embark on missions, and redefine your limits.
         </p>
-        <Link className="mt-8 px-6 py-3 text-black bg-gradient-to-r from-cyan-200 to-cyan-600 hover:scale-105 duration-300 ease-in-out rounded-2xl font-medium shadow-lg focus:outline-none" to="/login">
+        <Link className="mt-8 px-6 py-3 text-black bg-gradient-to-r from-cyan-200 to-cyan-600 hover:scale-105 duration-300 ease-in-out rounded-2xl font-medium shadow-lg focus:outline-none" to="/waitlist">
           Get Started
         </Link>
       </header>
@@ -53,7 +53,7 @@ const Home = () => {
         <p className="mt-4 text-gray-400">
           Sign up today and take the first step toward exploring the universe.
         </p>
-        <Link className="inline-block mt-14 px-6 py-3 text-black bg-gradient-to-r from-cyan-200 to-cyan-600 hover:scale-105 duration-300 ease-in-out rounded-xl font-medium shadow-lg focus:outline-none" to="/waitlist">
+        <Link className="inline-block mt-14 px-6 py-3 text-black bg-gradient-to-r from-cyan-200 to-cyan-600 hover:scale-105 duration-300 ease-in-out rounded-xl font-medium shadow-lg focus:outline-none" to="/login">
           Join Now
         </Link>
       </section>
