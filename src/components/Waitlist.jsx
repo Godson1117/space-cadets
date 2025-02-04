@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Waitlist() {
   const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState({})
+  const [refferals,setRefferals]=useState(0)
   const referralLink = "https://app.spacecadets?referral=[referral_code]";
 
   const handleCopy = () => {
@@ -9,6 +11,24 @@ export default function Waitlist() {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const handleClick = () => {
+    setRefferals(refferals+1)
+  }
+
+  useEffect(() => {
+    fetch('http://localhost:4000/stats')
+      .then(response => response.json())
+      .then(data => {
+        setStatus(data);
+        // Update state with fetched data if necessary
+      })
+      .catch(error => console.error('Error fetching stats:', error));
+
+    return () => {
+
+    }
+  }, [])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[url('/bg-2.png')] bg-black text-white px-4 sm:px-6 py-6">
@@ -29,8 +49,8 @@ export default function Waitlist() {
         {/* Progress Bar Section */}
         <div className="space-y-2">
           <div className="text-sm flex justify-between">
-            <span className="text-blue-400">25% spots remaining</span>
-            <span className="text-pink-500">102 people already on the list!</span>
+            <span className="text-blue-400">{status.percentageFilled} spots remaining</span>
+            <span className="text-pink-500">{status.totalJoinees} people already on the list!</span>
           </div>
           <div className="w-full bg-gray-700 h-2 rounded-full">
             <div className="bg-blue-500 h-2 rounded-full" style={{ width: "15%" }}></div>
@@ -40,11 +60,11 @@ export default function Waitlist() {
         {/* Stats Section */}
         <div className="flex justify-around text-sm sm:text-lg">
           <div>
-            <p className="font-semibold">330</p>
+            <p className="font-semibold">{sessionStorage.getItem("points")}</p>
             <p className="text-gray-400 text-xs sm:text-sm">Points earned</p>
           </div>
           <div>
-            <p className="font-semibold">2</p>
+            <p className="font-semibold">{refferals}</p>
             <p className="text-gray-400 text-xs sm:text-sm">Referrals</p>
           </div>
         </div>
@@ -84,21 +104,25 @@ export default function Waitlist() {
             src="/facebook.png"
             alt="Facebook"
             className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+            onClick={handleClick}
           />
           <img
             src="/instagram.png"
             alt="Instagram"
             className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+            onClick={handleClick}
           />
           <img
             src="/linkedin.png"
             alt="LinkedIn"
             className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+            onClick={handleClick}
           />
           <img
             src="/x.png"
             alt="Twitter (X)"
             className="w-5 sm:w-6 h-5 sm:h-6 cursor-pointer hover:opacity-80"
+            onClick={handleClick}
           />
         </div>
       </div>

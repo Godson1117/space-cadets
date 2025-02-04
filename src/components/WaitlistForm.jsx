@@ -12,6 +12,15 @@ const WaitListForm = () => {
   const [points, setPoints] = useState(null);  // ✅ State for points
   const navigate = useNavigate();
 
+  const generateRandomPoints = () => {
+    return Math.floor(Math.random() * (200 - 20 + 1)) + 20;
+  };
+
+  useEffect(() => {
+    const randomPoints = generateRandomPoints();
+    sessionStorage.setItem("points", randomPoints);  // ✅ Store points in session storage
+  }, []);
+
   // Fetch questions from backend
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -62,6 +71,9 @@ const WaitListForm = () => {
       // ✅ Set points and message from backend response
       setMessage(result.message);
       setPoints(result.points);
+
+      sessionStorage.setItem("points", result.points);  // ✅ Store points in session storage
+      sessionStorage.setItem("message", result.message);  // ✅ Store message in session storage
 
       // ✅ Delay navigation to show points for a few seconds
       setTimeout(() => navigate("/confirm"), 5000);
