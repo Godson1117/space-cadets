@@ -8,6 +8,8 @@ const WaitListForm = () => {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState(null);
   const [fetchError, setFetchError] = useState(null);
+  const [message, setMessage] = useState("");  // ✅ State for backend message
+  const [points, setPoints] = useState(null);  // ✅ State for points
   const navigate = useNavigate();
 
   // Fetch questions from backend
@@ -33,10 +35,10 @@ const WaitListForm = () => {
     const transformedData = {
       name: data.name,
       email: data.email,
-      reasonOfJoin: data.reasonOfJoin,  // Corrected field name
-      excitesOfJoin: data.First,  // Map First to excitesOfJoin
-      platformUse: data.Second,   // Map Second to platformUse
-      infoOfPlatform: data.Third, // Map Third to infoOfPlatform
+      reasonOfJoin: data.reasonOfJoin,
+      excitesOfJoin: data.First,
+      platformUse: data.Second,
+      infoOfPlatform: data.Third,
     };
 
     console.log("Submitting Transformed Data:", transformedData);
@@ -50,15 +52,22 @@ const WaitListForm = () => {
         body: JSON.stringify(transformedData),
       });
 
+      const result = await response.json();
+      console.log("Response Data:", result);
+
       if (!response.ok) {
-        throw new Error("Failed to submit form");
+        throw new Error(result.message || "Failed to submit form");
       }
 
-      console.log("Form submitted successfully");
-      navigate("/confirm");
+      // ✅ Set points and message from backend response
+      setMessage(result.message);
+      setPoints(result.points);
+
+      // ✅ Delay navigation to show points for a few seconds
+      setTimeout(() => navigate("/confirm"), 5000);
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Submission failed. Please try again.");
+      alert(error.message || "Submission failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -84,18 +93,14 @@ const WaitListForm = () => {
 
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="p-5 backdrop-blur-xl bg-gradient-to-r from-[#6b2793]/15 via-[#1b5c6b]/30 to-[#0a1746]/15 rounded-xl relative mx-auto border border-gray-400/20 shadow-lg">
-            <label
-              className="block font-bold mb-2 text-white text-center"
-              htmlFor="reason"
-            >
-              Why do you want to join ?
+            <label className="block font-bold mb-2 text-white text-center">
+              Why do you want to join?
             </label>
             <input
               type="text"
-              id="reason"
               className={`w-full mt-2 p-3 rounded-lg bg-black border ${errors.reasonOfJoin ? 'border-red-500' : 'border-gray-700'} placeholder-gray-500 focus:outline-none`}
               placeholder="Type your answer..."
-              {...register("reasonOfJoin", { required: true })}  // Updated field name
+              {...register("reasonOfJoin", { required: true })}
             />
           </div>
 
@@ -154,6 +159,8 @@ const WaitListForm = () => {
             </button>
           </div>
         </form>
+
+       
 
         <p className="text-center text-gray-300 mt-6">
           Don’t miss your chance to be part of the journey!
