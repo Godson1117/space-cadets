@@ -1,27 +1,47 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
+import { data, useNavigate } from "react-router-dom";
 import BackdropLoader from "./BackdropLoader";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);// Show loader
-    // try {
-    //   const response = await axios.post('http://localhost:4000/login', data);
-    //   console.log(response);
-    // } catch (error) {
-    //   console.error("Login failed:", error);
-    // } finally {
-    //   setLoading(false); // Hide loader after API response
-    // }
+    try {
+      const response = await axios.post('http://localhost:4000/login', data);
+      console.log(response);
+      // Redirect to home page after successful login
+      navigate('/');
+      alert('login successfull')
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      setLoading(false); // Hide loader after API response
+    }
   };
+
+  // const handlePasswordReset = async (data) => {
+  //   setLoading(true);
+  //   console.log(data);
+    
+  //   try {
+  //     const response = await axios.get('http://localhost:4000/forgot_password');
+  //     console.log(response);
+  //     // Handle success response
+  //     alert("Password reset email sent!");
+  //   } catch (error) {
+  //     console.error("Password reset failed:", error);
+  //     // Handle error response
+  //     alert("Password reset failed. Please try again.");
+  //   } finally {
+  //     setLoading(false); // Hide loader after API response
+  //   }
+  // };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[url('/bg.png')] bg-center bg-cover px-4 sm:px-6 lg:px-8 relative">
@@ -75,7 +95,13 @@ const Login = () => {
           </div>
 
           <div className="flex justify-center">
-            <Link to="/password-reset" className="text-center text-gray-400 underline text-xs hover:scale-105 hover:text-green-400 duration-300">Reset your password here</Link>
+            <button
+              type="button"
+              className="text-center text-gray-400 underline text-xs hover:scale-105 hover:text-green-400 duration-300"
+              
+            >
+              Forgotten Your Password ?
+            </button>
           </div>
 
           <div className="text-center">
@@ -84,7 +110,7 @@ const Login = () => {
               className="mt-5 w-32 py-2 px-4 font-medium rounded-xl text-black bg-gradient-to-r from-cyan-200 to-cyan-600 transition-all ease-in-out duration-300 hover:scale-105"
               disabled={loading} // Disable button when loading
             >
-              Get Started
+              Login
             </button>
           </div>
         </form>
