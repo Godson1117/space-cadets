@@ -17,7 +17,7 @@ const PassReset = () => {
   const handleEmailVerification = async (data) => {
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:4000/forgot-password", data)
+      const res = await axios.post("https://space-cadet.onrender.com/forgot-password", data)
       setLoading(false);
       setResponse(res.data.message)
       sessionStorage.setItem('email', data.email)
@@ -31,7 +31,7 @@ const PassReset = () => {
   const handleOtpVerification = async (data) => {
     try {
       setLoading(true)
-      const res = await axios.post("http://localhost:4000/verify-otp", { email: sessionStorage.getItem('email'), otp: data.otp })
+      const res = await axios.post("https://space-cadet.onrender.com/verify-otp", { email: sessionStorage.getItem('email'), otp: data.otp })
       setLoading(false)
       setResponse(res.data.message)
       setStatus("setPassword")
@@ -45,7 +45,7 @@ const PassReset = () => {
     console.log(data)
     try {
       setLoading(true)
-      const res = await axios.post("http://localhost:4000/reset-password", { email: sessionStorage.getItem('email'), password: data.newPassword })
+      const res = await axios.post("https://space-cadet.onrender.com/reset-password", { email: sessionStorage.getItem('email'), password: data.newPassword })
       setLoading(false)
       setResponse(res.data.message)
       setStatus("success")

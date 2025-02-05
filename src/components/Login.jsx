@@ -12,7 +12,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:4000/login', data);
+      const res = await axios.post('https://space-cadet.onrender.com/login', data);
       console.log(res.data);
       setResponse(res.data.message)
     } catch (error) {
